@@ -60,15 +60,21 @@ fi
 # ---------------------------------------------------------------------------
 # URL builders based on platform+arch
 # ---------------------------------------------------------------------------
+# python-build-standalone uses "aarch64" while macOS uname -m reports "arm64"
+case "$ARCH_RAW" in
+    arm64) PYTHON_ARCH="aarch64" ;;
+    *)     PYTHON_ARCH="$ARCH_RAW" ;;
+esac
+
 if [ "$PLATFORM" = "macos" ]; then
-    PYTHON_URL="https://github.com/indygreg/python-build-standalone/releases/download/20241016/cpython-3.11.10+20241016-${ARCH_RAW}-apple-darwin-install_only.tar.gz"
+    PYTHON_URL="https://github.com/astral-sh/python-build-standalone/releases/download/20260510/cpython-3.11.15+20260510-${PYTHON_ARCH}-apple-darwin-install_only.tar.gz"
     NODE_URL="https://nodejs.org/dist/v22.14.0/node-v22.14.0-darwin-${ARCH}.tar.gz"
-    UV_URL="https://github.com/astral-sh/uv/releases/download/0.6.8/uv-${ARCH_RAW}-apple-darwin.tar.gz"
+    UV_URL="https://github.com/astral-sh/uv/releases/download/0.7.8/uv-${PYTHON_ARCH}-apple-darwin.tar.gz"
     RG_URL="https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-universal-apple-darwin.tar.gz"
 else
-    PYTHON_URL="https://github.com/indygreg/python-build-standalone/releases/download/20241016/cpython-3.11.10+20241016-${ARCH_RAW}-unknown-linux-gnu-install_only.tar.gz"
+    PYTHON_URL="https://github.com/astral-sh/python-build-standalone/releases/download/20260510/cpython-3.11.15+20260510-${ARCH_RAW}-unknown-linux-gnu-install_only.tar.gz"
     NODE_URL="https://nodejs.org/dist/v22.14.0/node-v22.14.0-linux-${ARCH}.tar.xz"
-    UV_URL="https://github.com/astral-sh/uv/releases/download/0.6.8/uv-${ARCH_RAW}-unknown-linux-gnu.tar.gz"
+    UV_URL="https://github.com/astral-sh/uv/releases/download/0.7.8/uv-${ARCH_RAW}-unknown-linux-gnu.tar.gz"
     RG_URL="https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-${ARCH_RAW}-unknown-linux-musl.tar.gz"
 fi
 
